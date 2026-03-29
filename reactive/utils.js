@@ -13,7 +13,7 @@ export function isObject(target) {
  * @param {*} newValue 新值
  * @returns
  */
-export function hasChange(oldValue, newValue) {
+export function hasChanged(oldValue, newValue) {
   return !Object.is(oldValue, newValue)
 }
 

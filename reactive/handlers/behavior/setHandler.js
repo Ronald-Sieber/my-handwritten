@@ -14,7 +14,7 @@ export default function (target, key, value) {
     trigger(target, key, type)
   }
 
-  // 最后执行基本行为
+  // 最后执行基本行为(先进行设置操作？)
   const result = Reflect.set(target, key, value)
   return result
 }
