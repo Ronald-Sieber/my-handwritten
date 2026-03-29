@@ -2,7 +2,7 @@ import track from '../../effect/track.js'
 import { reactive } from '../../reactive.js'
 import { isObject, TrackOpTypes } from '../../utils.js'
 
-export default function getHandler(target, key) {
+export default function (target, key) {
   // 首先进行依赖收集
   track(target, key, TrackOpTypes.GET)
 

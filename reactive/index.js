@@ -12,7 +12,7 @@ const obj = {
 const proxyObj = reactive(obj)
 //#region 测试读取操作
 // console.log(proxyObj.a)
-console.log(proxyObj.c.a)
+// console.log(proxyObj.c.a)
 // 'a' in proxyObj
 // for (const element in proxyObj) {
 // }
@@ -23,4 +23,5 @@ console.log(proxyObj.c.a)
 
 // proxyObj.d = 100
 // proxyObj.d = 10
+delete proxyObj.a
 //#endregion 测试写入操作
