@@ -6,9 +6,10 @@ export default function getHandler(target, key) {
   // 首先进行依赖收集
   track(target, key, TrackOpTypes.GET)
 
-  if (isObject) return reactive(target)
-
   // 最后执行基本行为
   const result = Reflect.get(target, key)
+
+  if (isObject) return reactive(result)
+
   return result
 }
