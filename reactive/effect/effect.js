@@ -1,4 +1,5 @@
 let activeEffect = null
+const effectStack = []
 const depsMap = new Map()
 
 function track(target, key) {
@@ -17,7 +18,8 @@ function track(target, key) {
 function trigger(target, key) {
   const deps = depsMap.get(key)
   if (deps) {
-    deps.forEach((effct) => effct())
+    const effectToRun = new Set(deps)
+    effectToRun.forEach((effct) => effct())
   }
 }
 
@@ -59,10 +61,12 @@ function cleanup(environment) {
 
 function effect(fn) {
   const environment = () => {
+    effectStack.push(environment)
     activeEffect = environment
     cleanup(environment)
     fn()
-    activeEffect = null
+    effectStack.pop()
+    activeEffect = effectStack[effectStack.length - 1]
   }
   environment.deps = []
   environment()
@@ -80,17 +84,22 @@ function effect(fn) {
 // })
 // proxyObj.a = 2
 
+// 3、effectToRun
+// effect(() => {
+//   proxyObj.a
+//   console.log('执行了函数1')
+// })
+// effect(() => {
+//   proxyObj.a
+//   console.log('执行了函数2')
+// })
+// proxyObj.a = 2
+
 effect(() => {
-  if (proxyObj.a === 1) {
-    proxyObj.b
-  } else {
-    proxyObj.c
-  }
+  effect(() => {
+    proxyObj.a
+    console.log('执行了函数2')
+  })
+  proxyObj.b
   console.log('执行了函数1')
 })
-effect(() => {
-  console.log(proxyObj.a)
-  console.log(proxyObj.c)
-  console.log('执行了函数2')
-})
-proxyObj.a = 2
