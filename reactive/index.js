@@ -47,10 +47,11 @@ const proxyArr = reactive([1, 2, obj, 3])
 
 //#region 测试写入操作
 // proxyArr[0] = 10
-// proxyArr[4] = 10
+// proxyArr[4] = 10 //newLength > oldLength
 // proxyArr.length = 1
+// proxyArr.length = 5 //newLength > oldLength
 
-proxyArr.push(5)
+// proxyArr.push(5)
 // proxyArr.pop()
 
 //#endregion 测试写入操作
