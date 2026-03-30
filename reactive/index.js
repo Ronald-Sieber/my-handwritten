@@ -9,7 +9,7 @@ const obj = {
   },
 }
 
-const proxyObj = reactive(obj)
+// const proxyObj = reactive(obj)
 //#region 测试读取操作
 // console.log(proxyObj.a)
 // console.log(proxyObj.c.a)
@@ -23,5 +23,34 @@ const proxyObj = reactive(obj)
 
 // proxyObj.d = 100
 // proxyObj.d = 10
-delete proxyObj.a
+// delete proxyObj.a
+//#endregion 测试写入操作
+
+// 测试数组
+const proxyArr = reactive([1, 2, obj, 3])
+
+//#region 测试读取操作
+// proxyArr[2]
+// proxyArr[2].a
+// proxyArr.length
+// for (const element in proxyArr) {
+// }
+
+// for (let i = 0; i < proxyArr.length; i++) {
+//   proxyArr[i]
+// }
+
+// console.log(proxyArr.indexOf(obj))
+// console.log(proxyArr.includes(obj))
+
+//#endregion 测试读取操作
+
+//#region 测试写入操作
+// proxyArr[0] = 10
+// proxyArr[4] = 10
+// proxyArr.length = 1
+
+proxyArr.push(5)
+// proxyArr.pop()
+
 //#endregion 测试写入操作

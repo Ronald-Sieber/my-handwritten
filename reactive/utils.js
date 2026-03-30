@@ -34,3 +34,5 @@ export const TriggerOpTypes = {
   DELETE: 'delete',
   ADD: 'add',
 }
+
+export const RAW = Symbol('raw')
