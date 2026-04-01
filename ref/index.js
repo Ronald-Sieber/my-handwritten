@@ -26,15 +26,15 @@ const proxyObj = ref(1)
 // })
 // proxyObj.value.a = 2
 
-effect(() => {
-  console.log('函数执行fn2')
-  console.log(proxyObj.value)
-})
-proxyObj.value = {}
+// effect(() => {
+//   console.log('函数执行fn2')
+//   console.log(proxyObj.value)
+// })
+// proxyObj.value = {}
 
 const proxyArr = ref([1, obj, 2])
 
-// console.log(proxyArr.value.includes(obj))
+console.log(proxyArr.value.indexOf(obj))
 
 //#region 测试懒执行和自定义派发更新时机
 // const effectFn = effect(

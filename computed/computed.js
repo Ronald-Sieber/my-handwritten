@@ -9,7 +9,7 @@ export function computed(getterOrOptions) {
   let valueCache
   let shouldRun = true
 
-  const effectFn = effect(getter, {
+  const effectFn = effect(() => getter(), {
     lazy: true,
     scheduler: () => {
       shouldRun = true
