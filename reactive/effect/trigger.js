@@ -24,6 +24,8 @@ const triggerTypeMap = {
  */
 export default function (target, key, type) {
   const effectFns = getEffectFns(target, key, type)
+  // console.log({ target, key, type })
+
   if (!effectFns) return
 
   for (const effectFn of effectFns) {
@@ -45,6 +47,9 @@ export default function (target, key, type) {
  */
 function getEffectFns(target, key, type) {
   const propMap = targetMap.get(target)
+  console.log({ propMap })
+
+  if (!propMap) return
 
   // 若为新增或删除操作，会影响迭代操作
   const keys = [key]

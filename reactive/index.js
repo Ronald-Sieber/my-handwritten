@@ -96,7 +96,7 @@ const effectFn = effect(
   },
 )
 
-effectFn()
+// effectFn()
 proxyObj.a++
 proxyObj.a++
 proxyObj.a++
