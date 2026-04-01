@@ -28,10 +28,13 @@ export default function (target, key, type) {
 
   for (const effectFn of effectFns) {
     if (effectFn === activeEffect) continue
-
-    effectFn()
+    if (effectFn.options && effectFn.options.scheduler) {
+      effectFn.options.scheduler(effectFn)
+    } else {
+      effectFn()
+    }
   }
-  console.log({ effectFns })
+  // console.log({ effectFns })
 }
 
 /**

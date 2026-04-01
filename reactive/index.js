@@ -58,7 +58,45 @@ const proxyArr = reactive([1, 2, obj, 3])
 //#endregion 测试写入操作
 
 // 判断effectFn === activeEffect
-effect(() => {
-  console.log(proxyObj.a)
-  proxyObj.a++
-})
+// effect(() => {
+//   console.log(proxyObj.a)
+//   proxyObj.a++
+// })
+
+// 懒执行
+// const fn = effect(
+//   () => {
+//     console.log(proxyObj.a)
+//   },
+//   { lazy: true },
+// )
+
+// setTimeout(() => {
+//   fn()
+// }, 2000)
+
+// 自定义触发trigger
+
+let shouldRun = false
+const effectFn = effect(
+  () => {
+    console.log('函数执行')
+    console.log(proxyObj.a)
+  },
+  {
+    lazy: true,
+    scheduler: (depFn) => {
+      Promise.resolve().then(() => {
+        if (!shouldRun) {
+          shouldRun = true
+          depFn()
+        }
+      })
+    },
+  },
+)
+
+effectFn()
+proxyObj.a++
+proxyObj.a++
+proxyObj.a++

@@ -6,7 +6,8 @@ const effectStack = []
  * 执行被监控函数并向track提供当前函数
  * @param {*} fn 需要执行的函数
  */
-export function effect(fn) {
+export function effect(fn, options = {}) {
+  const { lazy = false } = options
   const environment = () => {
     try {
       effectStack.push(environment)
@@ -19,6 +20,11 @@ export function effect(fn) {
     }
   }
   environment.deps = []
+  environment.options = options
+
+  if (lazy) {
+    return environment
+  }
   environment()
 }
 
