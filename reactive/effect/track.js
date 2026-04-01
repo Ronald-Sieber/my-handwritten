@@ -1,4 +1,5 @@
-import { TrackOpTypes } from '../utils.js'
+import { ITERATE_KEY, TrackOpTypes } from '../utils.js'
+import { activeEffect, targetMap } from './effect.js'
 
 let shouldTrack = true
 
@@ -16,13 +17,40 @@ export const resumeTracking = () => {
   shouldTrack = true
 }
 
+/**
+ * 收集器
+ * @param {*} target 原始对象
+ * @param {*} key 对象属性
+ * @param {*} type 操作类型
+ */
 export default function (target, key, type) {
-  if (!shouldTrack) return
+  // 不期望数组push等方法触发length的依赖收集
+  if (!shouldTrack || !activeEffect) return
 
-  if (type === TrackOpTypes.ITERATE) {
-    console.log(`收集器：代理对象的${type}操作被拦截`)
-    return
+  let propMap = targetMap.get(target)
+  if (!propMap) {
+    propMap = new Map()
+    targetMap.set(target, propMap)
   }
 
-  console.log(`收集器：代理对象${key}属性的${type}操作被拦截`)
+  if (type === TrackOpTypes.ITERATE) {
+    key = ITERATE_KEY
+  }
+
+  let typeMap = propMap.get(key)
+  if (!typeMap) {
+    typeMap = new Map()
+    propMap.set(key, typeMap)
+  }
+
+  let depSet = typeMap.get(type)
+  if (!depSet) {
+    depSet = new Set()
+    typeMap.set(type, depSet)
+  }
+
+  if (!depSet.has(activeEffect)) {
+    activeEffect.deps.push(depSet)
+    depSet.add(activeEffect)
+  }
 }

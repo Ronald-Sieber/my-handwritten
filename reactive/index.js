@@ -1,4 +1,5 @@
 // 这是一个测试文件
+import { effect } from './effect/effect.js'
 import { reactive } from './reactive.js'
 
 const obj = {
@@ -9,7 +10,7 @@ const obj = {
   },
 }
 
-// const proxyObj = reactive(obj)
+const proxyObj = reactive(obj)
 //#region 测试读取操作
 // console.log(proxyObj.a)
 // console.log(proxyObj.c.a)
@@ -55,3 +56,9 @@ const proxyArr = reactive([1, 2, obj, 3])
 // proxyArr.pop()
 
 //#endregion 测试写入操作
+
+// 判断effectFn === activeEffect
+effect(() => {
+  console.log(proxyObj.a)
+  proxyObj.a++
+})
