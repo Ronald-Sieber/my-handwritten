@@ -18,7 +18,7 @@ const obj = {
 // })
 // proxyNum.value = 2
 
-const proxyObj = ref(obj)
+const proxyObj = ref(1)
 
 // effect(() => {
 //   console.log('函数执行fn1')

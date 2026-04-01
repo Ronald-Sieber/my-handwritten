@@ -47,7 +47,6 @@ export default function (target, key, type) {
  */
 function getEffectFns(target, key, type) {
   const propMap = targetMap.get(target)
-  console.log({ propMap })
 
   if (!propMap) return
 

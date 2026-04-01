@@ -25,7 +25,6 @@ export const resumeTracking = () => {
  */
 export default function (target, key, type) {
   // 不期望数组push等方法触发length的依赖收集
-  console.log('track')
   if (!shouldTrack || !activeEffect) return
 
   let propMap = targetMap.get(target)
